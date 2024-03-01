@@ -1,0 +1,9 @@
+PyJWT
+flask
+Flask-OAuthlib
+flask_jwt_extended
+google-cloud-firestore
+firebase-admin
+flask-dance
+blinker
+python-dotenv
