@@ -53,9 +53,31 @@
       background: #1669f2;
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.js" integrity="sha512-tE1z+95+lMCGwy+9PnKgUSIeHhvioC9lMlI7rLWU0Ps3XTdjRygLcy4mLuL0JAoK4TLdQEyP0yOl/9dMOqpH/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var socket = io.connect("http://127.0.0.1:5000");
+
+        socket.on("message", function(data){
+          $("#response").append($("<p>").text(data));
+        });
+
+        $("#sendBtn").on("click", function () {
+            socket.send($("#textInput").val());
+            console.log($("#textInput").val())
+            $("#textInput").val("");
+        });
+      })
+    </script>
+  <textarea id="textInput" placeholder="Enter positive or negative text"></textarea>
+  <button id="sendBtn">Send</button>
+  <div id="response">
+
+  </div>
   <h3>Example of Google Login in Python Flask Application</h3>
   {% if not google_data %}
     <p style="color:#333;">You are not logged in, Click on the below link to sign in with google.</p>
@@ -71,10 +93,25 @@
       <div class="detail">
         <p style="font-size: 15px; padding-bottom: 10px;">User info fetched from <strong>{{ fetch_url }}</strong></p>
         {% for key, value in google_data.items() %}
+          {% if key == "picture" %}
+            <p><strong>{{ key }}</strong>: <img src="{{ value }}"/></p>
+          {% else %}
           <p><strong>{{ key }}</strong>: {{ value }}</p>
+          {% endif %}
         {% endfor %}
       </div>
     {% endif %}
+
+  {% if user_posts is not none %}
+    <div class="detail">
+      <p style="font-size: 15px; padding-bottom: 10px;">User posts fetched from Firestore</p>
+      {% for dict in user_posts %}
+        {% for key, value in dict.items() %}
+          <p><strong>{{ key }}</strong> <strong>{{ value }}</strong></p>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  {% endif %}
   {% endif %}
 </body>
 </html>

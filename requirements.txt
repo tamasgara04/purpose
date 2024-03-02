@@ -7,3 +7,6 @@ firebase-admin
 flask-dance
 blinker
 python-dotenv
+flask-socketio
+torch
+transformers
