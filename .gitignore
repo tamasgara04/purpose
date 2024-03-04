@@ -1,5 +1,10 @@
 .venv
 .env
 purpose-tamas-firebase-adminsdk-bmj7j-5712f0f0a3.json
-__pycache__
-utils/__pycache__
+./__pycache__
+./utils/__pycache__
+.gitignore
+utils/__pycache__/firestore_methods.cpython-39.pyc
+utils/__pycache__/ml_methods.cpython-39.pyc
+__pycache__/firestore_methods.cpython-39.pyc
+

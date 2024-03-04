@@ -72,23 +72,57 @@
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
+    .google-btn {
+      width: 184px;
+      height: 42px;
+      background-color: #4285f4;
+      border-radius: 2px;
+      box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
+      display: block;
+    }
+    .google-btn .google-icon-wrapper {
+      position: absolute;
+      margin-top: 1px;
+      margin-left: 1px;
+      width: 40px;
+      height: 40px;
+      border-radius: 2px;
+      background-color: #fff;
+    }
+    .google-btn .google-icon {
+      position: absolute;
+      margin-top: 11px;
+      margin-left: 11px;
+      width: 18px;
+      height: 18px;
+    }
+    .google-btn .btn-text {
+      float: right;
+      margin: 11px 11px 0 0;
+      color: #fff;
+      font-size: 14px;
+      letter-spacing: 0.2px;
+      font-family: "Roboto";
+    }
+    .google-btn:hover {
+      box-shadow: 0 0 6px #4285f4;
+    }
+    .google-btn:active {
+      background: #1669f2;
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
     {% if not google_data %}
-    <p>You are not logged in. Click on the below link to sign in with Google.</p>
-    <div class="row center-align">
-      <a href="/login" class="google-btn">
-        <div class="col s12">
-          <div class="google-icon-wrapper">
-            <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Icon">
-          </div>
-          <p class="btn-text"><b>Sign in with Google</b></p>
-        </div>
-      </a>
-    </div>
+    <p style="color:#333;">You are not logged in, Click on the below link to sign in with google.</p>
+    <a href="/login" class="google-btn">
+      <div class="google-icon-wrapper">
+        <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"/>
+      </div>
+      <p class="btn-text"><b>Sign in with google</b></p>
+    </a>
     {% else %}
     <div class="google-data">
       <p>Hi {{ google_data.name }}, [<strong>{{ google_data.email }}</strong>]. You have logged in successfully from your Google Account. Check your below details.</p>
