@@ -3,6 +3,7 @@
 
 <head>
   <title>Google Oauth 2.0 Login for Python Flask Application</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <style>
     @import url(https://fonts.googleapis.com/css?family=Roboto:500);
     body {
@@ -75,16 +76,20 @@
 </head>
 
 <body>
+  <div class="container">
     {% if not google_data %}
     <p>You are not logged in. Click on the below link to sign in with Google.</p>
-    <a href="/login" class="google-btn">
-      <div class="google-icon-wrapper">
-        <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Icon">
-        <p class="btn-text"><b>Sign in with Google</b></p>
-      </div>
-    </a>
+    <div class="row center-align">
+      <a href="/login" class="google-btn">
+        <div class="col s12">
+          <div class="google-icon-wrapper">
+            <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Icon">
+          </div>
+          <p class="btn-text"><b>Sign in with Google</b></p>
+        </div>
+      </a>
+    </div>
     {% else %}
-    
     <div class="google-data">
       <p>Hi {{ google_data.name }}, [<strong>{{ google_data.email }}</strong>]. You have logged in successfully from your Google Account. Check your below details.</p>
       <div class="detail">
@@ -103,8 +108,8 @@
         <!-- Chat messages will be appended here -->
       </div>
       <div class="chat-input-container">
-      <input type="text" id="textInput" class="chat-input" placeholder="Type your message...">
-      <button id="sendBtn" class="send-btn">Send</button>
+        <input type="text" id="textInput" class="chat-input" placeholder="Type your message...">
+        <button id="sendBtn" class="send-btn">Send</button>
       </div>
     </div>
 
@@ -145,11 +150,10 @@
       function appendMessage(message, type) {
         var messageClass = "";
         var response = "";
-        if (type === "sent" ) {
+        if (type === "sent") {
           messageClass = "sent-message";
           response = "User: "
-        }
-        else {
+        } else {
           messageClass = "received-message";
           response = "Response: "
         }
@@ -158,7 +162,7 @@
         $("#chatBox").scrollTop($("#chatBox")[0].scrollHeight);
       }
     });
-    
+
   </script>
 </body>
 

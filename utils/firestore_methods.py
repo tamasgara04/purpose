@@ -1,8 +1,8 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
+from dotenv import load_dotenv
 import os
 from datetime import datetime
-from dotenv import load_dotenv
 
 class User:
     def __init__(self, name, email):
