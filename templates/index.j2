@@ -2,116 +2,155 @@
 <html class="no-js" lang="">
 
 <head>
-  <title>Google Oauth 2.0 Login for python Flask application</title>
+  <title>Google Oauth 2.0 Login for Python Flask Application</title>
   <style>
     @import url(https://fonts.googleapis.com/css?family=Roboto:500);
     body {
       font-family: "Roboto";
-    }
-    .detail {
+      background-color: #f2f2f2;
       margin: 0;
-      padding-left: 5px;
-      border: solid gold 3px;
-      background-color: beige;
+      padding: 0;
     }
-    .google-btn {
-      width: 184px;
-      height: 42px;
-      background-color: #4285f4;
-      border-radius: 2px;
-      box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.25);
-      display: block;
-    }
-    .google-btn .google-icon-wrapper {
-      position: absolute;
-      margin-top: 1px;
-      margin-left: 1px;
-      width: 40px;
-      height: 40px;
-      border-radius: 2px;
+    .chat-container {
+      max-width: 600px;
+      margin: 20px auto;
       background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
     }
-    .google-btn .google-icon {
-      position: absolute;
-      margin-top: 11px;
-      margin-left: 11px;
-      width: 18px;
-      height: 18px;
+    .chat-box {
+      height: 200px;
+      overflow-y: scroll;
+      padding: 10px;
     }
-    .google-btn .btn-text {
-      float: right;
-      margin: 11px 11px 0 0;
+    .chat-message {
+      margin-bottom: 15px;
+    }
+    .chat-message:last-child {
+      margin-bottom: 0;
+    }
+    .chat-input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      border: none;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      outline: none;
+      font-size: 16px;
+      resize: none;
+    }
+    .send-btn {
+      width: 100px;
+      height: 40px;
+      background-color: #4285f4;
       color: #fff;
-      font-size: 14px;
-      letter-spacing: 0.2px;
-      font-family: "Roboto";
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      outline: none;
+      font-size: 16px;
     }
-    .google-btn:hover {
-      box-shadow: 0 0 6px #4285f4;
+    .send-btn:hover {
+      background-color: #357ae8;
     }
-    .google-btn:active {
-      background: #1669f2;
+    .response-container {
+      padding: 10px;
+    }
+    .google-data {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .user-post {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.js" integrity="sha512-tE1z+95+lMCGwy+9PnKgUSIeHhvioC9lMlI7rLWU0Ps3XTdjRygLcy4mLuL0JAoK4TLdQEyP0yOl/9dMOqpH/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
-    <script type="text/javascript">
-      $(document).ready(function() {
-        var socket = io.connect("http://127.0.0.1:5000");
-
-        socket.on("message", function(data){
-          $("#response").append($("<p>").text(data));
-        });
-
-        $("#sendBtn").on("click", function () {
-            socket.send($("#textInput").val());
-            console.log($("#textInput").val())
-            $("#textInput").val("");
-        });
-      })
-    </script>
-  <textarea id="textInput" placeholder="Enter positive or negative text"></textarea>
-  <button id="sendBtn">Send</button>
-  <div id="response">
-
-  </div>
-  <h3>Example of Google Login in Python Flask Application</h3>
-  {% if not google_data %}
-    <p style="color:#333;">You are not logged in, Click on the below link to sign in with google.</p>
+    {% if not google_data %}
+    <p>You are not logged in. Click on the below link to sign in with Google.</p>
     <a href="/login" class="google-btn">
       <div class="google-icon-wrapper">
-        <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"/>
+        <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Icon">
+        <p class="btn-text"><b>Sign in with Google</b></p>
       </div>
-      <p class="btn-text"><b>Sign in with google</b></p>
     </a>
-  {% else %}
-    <p>Hi {{ google_data.name }}, [<strong>{{ google_data.email }}</strong>]. You have logged in successfully from your Google Account. Check your below details.</p>
-    {% if google_data is not none %}
+    {% else %}
+    
+    <div class="google-data">
+      <p>Hi {{ google_data.name }}, [<strong>{{ google_data.email }}</strong>]. You have logged in successfully from your Google Account. Check your below details.</p>
       <div class="detail">
         <p style="font-size: 15px; padding-bottom: 10px;">User info fetched from <strong>{{ fetch_url }}</strong></p>
         {% for key, value in google_data.items() %}
-          {% if key == "picture" %}
-            <p><strong>{{ key }}</strong>: <img src="{{ value }}"/></p>
-          {% else %}
-          <p><strong>{{ key }}</strong>: {{ value }}</p>
-          {% endif %}
+        {% if key == "picture" %}
+        <p><strong>{{ key }}</strong>: <img src="{{ value }}" alt="Profile Picture"></p>
+        {% else %}
+        <p><strong>{{ key }}</strong>: {{ value }}</p>
+        {% endif %}
         {% endfor %}
       </div>
-    {% endif %}
+    </div>
+    <div class="chat-container">
+      <div class="chat-box" id="chatBox">
+        <!-- Chat messages will be appended here -->
+      </div>
+      <div class="chat-input-container">
+        <input type="text" id="textInput" class="chat-input" placeholder="Type your message...">
+        <button id="sendBtn" class="send-btn">Send</button>
+      </div>
+    </div>
 
-  {% if user_posts is not none %}
-    <div class="detail">
+    {% if user_posts is not none %}
+    <div class="user-post">
       <p style="font-size: 15px; padding-bottom: 10px;">User posts fetched from Firestore</p>
-      {% for dict in user_posts %}
-        {% for key, value in dict.items() %}
-          <p><strong>{{ key }}</strong> <strong>{{ value }}</strong></p>
-        {% endfor %}
+      {% for post in user_posts %}
+      <div class="post">
+        <p><strong>Title:</strong> {{ post.title }}</p>
+        <p><strong>Content:</strong> {{ post.content }}</p>
+        <p><strong>Date:</strong> {{ post.date }}</p>
+      </div>
       {% endfor %}
     </div>
-  {% endif %}
-  {% endif %}
+    {% endif %}
+    {% endif %}
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.js" integrity="sha512-tE1z+95+lMCGwy+9PnKgUSIeHhvioC9lMlI7rLWU0Ps3XTdjRygLcy4mLuL0JAoK4TLdQEyP0yOl/9dMOqpH/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    $(document).ready(function () {
+      var socket = io.connect("http://127.0.0.1:5001");
+
+      socket.on("message", function (data) {
+        appendMessage(data, "received");
+      });
+
+      $("#sendBtn").on("click", function () {
+        var message = $("#textInput").val();
+        if (message.trim() !== "") {
+          appendMessage(message, "sent");
+          socket.send(message);
+          $("#textInput").val("");
+        }
+      });
+
+      function appendMessage(message, type) {
+        var messageClass = type === "sent" ? "sent-message" : "received-message";
+        var messageElement = $("<div class='chat-message " + messageClass + "'></div>").text(message);
+        $("#chatBox").append(messageElement);
+        $("#chatBox").scrollTop($("#chatBox")[0].scrollHeight);
+      }
+    });
+    
+  </script>
 </body>
+
 </html>
