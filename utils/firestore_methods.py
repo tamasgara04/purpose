@@ -2,6 +2,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import os
 from datetime import datetime
+from dotenv import load_dotenv
 
 class User:
     def __init__(self, name, email):
@@ -21,7 +22,7 @@ class APIUser:
 
     def to_dict(self):
         return {
-            "username": self.name,
+            "username": self.username,
             "password": self.password
         }
 
@@ -176,7 +177,18 @@ class FireMethods:
         return users
 
 if __name__ == "__main__":
-    fm = FireMethods("purpose-tamas-firebase-adminsdk-bmj7j-5712f0f0a3.json")
+    # Get the parent directory of the current file
+    parent_dir = os.path.dirname(os.path.dirname(__file__))  # Assuming this script is in a subdirectory
+
+    # Path to the .env file in the parent directory
+    dotenv_path = os.path.join(parent_dir, '.env')
+
+    # Load environment variables from .env file
+    load_dotenv(dotenv_path)
+
+    # Init Firemethods
+    fm = FireMethods(os.getenv("fire_json"))
+
     # Create a user
     user1 = User(name="Alice", email="alice@example.com")
 
@@ -184,8 +196,15 @@ if __name__ == "__main__":
     user_id = fm.add_user(user1)
     print("User ID:", user_id)
 
+    # Create a api user
+    api_user1 = APIUser(name="user1", password="password1")
+
+    # Add the api user to Firestore
+    api_userid = fm.add_api_user(api_user1)
+    print(api_userid)
+
     # Create a post
-    post1 = fm.Post(title="First Post", content="Hello World!", user_id=user_id)
+    post1 = Post(title="First Post", content="Hello World!", user_id=user_id)
 
     # Add the post to Firestore
     post_id = fm.add_post(post1)
