@@ -98,7 +98,7 @@ By following these steps, you can securely store and manage your OAuth 2.0 clien
     fire_json=/path/to/serviceAccountKey.json
     ```
     
-### Building and Running a Docker Image
+## Building and Running a Docker Image
 
 1. **Navigate to Project Directory:**
    Open a terminal or command prompt and navigate to the directory containing your Dockerfile and project files.
