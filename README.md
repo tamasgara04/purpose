@@ -118,6 +118,26 @@ By following these steps, you can securely store and manage your OAuth 2.0 clien
 4. **Access Your Application:**
     Once the container is running, you can access your application by navigating to `http://localhost:5001` in your web browser. The application should now be running on port 5001 inside the Docker container.
 
+### Adding Initial Data to Firestore Database
+
+If you wish to add initial data to your Firestore database, you can run the `firestore_methods.py` file located in the `utils` folder. Follow these steps:
+
+1. **Ensure Required Packages are Installed:**
+   Before running the script, make sure that the `firebase_admin` and `dotenv` packages are installed in your Python environment. You can install them using pip:
+   ```bash
+   pip install firebase_admin python-dotenv
+   ```
+2. **Navigate to the Utils Folder:**
+   Open a terminal or command prompt and navigate to the directory where your firestore_methods.py file is located. If it's within a folder named utils, navigate to that folder.
+
+3. **Run the Script:**
+   Execute the script by running the following command:
+   ```
+   python firestore_methods.py
+   ```
+4. **Verify Data Addition:**
+   Once the script completes execution, verify that the initial data has been successfully added to your Firestore database by checking the Firestore console or querying the database programmatically.
+
 # Issues and considerations:
 
 ## Choosing the Better Database Construction
