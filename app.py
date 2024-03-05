@@ -17,15 +17,15 @@ load_dotenv()
 # Init variables
 client_id = os.getenv('GOOGLE_CLIENT_ID')
 client_secret = os.getenv('GOOGLE_CLIENT_SECRET')
-json_creds = os.getenv("fire_json")
+json_creds = os.getenv("FIRE_JSON")
 app = Flask(__name__)
-app.config["SECRET_KEY"] = os.getenv('secret_key')
+app.config["SECRET_KEY"] = os.getenv('SECRET_KEY')
 os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 os.environ['OAUTHLIB_RELAX_TOKEN_SCOPE'] = '1'
 
 # Setups
 # Setup JWT
-app.config['JWT_SECRET_KEY'] = os.getenv('secret_key')
+app.config['JWT_SECRET_KEY'] = os.getenv('SECRET_KEY')
 jwt = JWTManager(app)
 
 # Setup SocketIO
