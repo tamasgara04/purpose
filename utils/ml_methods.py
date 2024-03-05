@@ -16,7 +16,7 @@ class CustML:
         Germany has played a central role in European history, from the Holy Roman Empire to the Protestant Reformation and the two World Wars of the 20th century. It is a federal parliamentary republic, with a democratic government and a strong emphasis on social welfare and environmental sustainability. The country is also a global leader in renewable energy and environmental conservation.
         """
 
-    def get_extra_content(self, new_context):
+    def get_database_content(self, new_context):
         formatted_context = "Users from database: \n"
         for line in new_context:
             formatted_context += f'Name: {line["name"]}, Email: {line["email"]}\n'
@@ -25,7 +25,7 @@ class CustML:
     # Define a function to process text and obtain sentiment prediction
     def answer_question(self, question, extra_context=""):
         # Get extra content
-        extra_context = self.get_extra_content(extra_context)
+        extra_context = self.get_database_content(extra_context)
 
         # Tokenize inputs
         inputs = self.tokenizer(question, self.context + extra_context, return_tensors="pt")
