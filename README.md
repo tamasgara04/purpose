@@ -84,7 +84,7 @@ By following these steps, you can securely store and manage your OAuth 2.0 clien
 ## Creating a Firebase Firestore Cloud Database for Python
 
 1. **Set Up Firebase Project:**
-   Start by creating a new project or selecting an existing one in the Firebase console (console.firebase.google.com).
+   Start by creating a new project or selecting an existing one in the [Firebase console](https://console.firebase.google.com).
 
 2. **Enable Firestore:**
    Once your project is set up, navigate to the "Firestore Database" section in the Firebase console. Click on "Create Database" and choose the location for your Firestore instance.
@@ -138,40 +138,6 @@ If you wish to add initial data to your Firestore database, you can run the `fir
 4. **Verify Data Addition:**
    Once the script completes execution, verify that the initial data has been successfully added to your Firestore database by checking the Firestore console or querying the database programmatically.
 
-# Issues and considerations:
-
-## Choosing the Better Database Construction
-
-### Embedding `posts` Collection within `users` Collection
-
-Embedding the `posts` collection within the `users` collection offers several advantages:
-
-- **Simplified Queries:** It simplifies queries when accessing a user's posts since posts are directly nested within the user document. This reduces the number of reads needed and improves query efficiency.
-
-- **Optimized Access:** Users can easily access their posts with a single read operation, which is beneficial for applications where posts are always accessed in the context of a user.
-
-### Keeping `posts` Collection Separate
-
-Alternatively, keeping the `posts` collection separate allows for more flexibility and scalability:
-
-- **Independent Access:** Posts can be accessed independently of users, which is useful if posts need to be queried globally or if they have relationships with entities besides users.
-
-- **Structured Management:** It facilitates managing posts in a more structured manner, especially when posts have complex relationships with other entities.
-
-- **Avoiding Scalability Issues:** Keeping the `posts` collection separate can prevent potential scalability issues, especially if a user has a large number of posts, as Firestore documents have size limits.
-
-### The Second Option Is the Way to Go
-
-Opting for the second option is advantageous due to its scalability. It acknowledges the potential for posts to originate from sources beyond just individual users, such as pages. By accommodating this flexibility, the system becomes more adaptable to future changes and expansions in the platform's functionality. This ensures robustness and effectiveness in managing posts across diverse content sources, enhancing overall reliability.
-
-## Port issues
-
-I encountered an issue where my Flask server was conflicting with the browser port. This conflict prevented the server from starting properly, resulting in connection errors. To resolve this issue, I assigned the Flask application to run on port 5001 instead of the default port. By specifying the port explicitly, I was able to bypass the conflict and ensure that the Flask server started without any issues.
-
-## Code organization
-
-While attempting to improve code organization, I found that due to time constraints, achieving optimal organization was challenging. Despite recognizing the importance of clean and modular code, limited time prevented me from implementing the desired level of organization effectively. As a result, the code structure may not be as well-organized as I had envisioned. However, I aim to revisit the code in the future to enhance its organization and maintainability once time allows.
-
 # Documentation
 
 Once the Docker container is up and running, navigate to http://localhost:5001 in your web browser. From there, you can log in using the Google Sign-In button. Upon successful authentication, you'll be directed to the landing page. 
@@ -179,7 +145,7 @@ Once the Docker container is up and running, navigate to http://localhost:5001 i
 ## You'll notice three distinct sections:
 
 - The initial box displays details about the Google user.
-- The second box serves as a chat interface, enabling interaction with the ML Bot. (Currently only a little bit of knowledge of germany and all the users in the database.)
+- The second box serves as a chat interface, enabling interaction with the ML Bot. (Currently only a little bit of knowledge about germany and all the users in the database.)
 - The third section showcases posts retrieved from a specific user via the API. 
 
 ### Obtaining API Token:
@@ -215,3 +181,38 @@ You can test the token's validity by making a GET request to http://127.0.0.1:50
 
 ### Rate Limiting:
 Be mindful of rate limits. Exceeding 10 requests per minute to /get_alice or /get_all_users will result in a limit error.
+
+# Issues and considerations:
+
+## Choosing the Better Database Construction
+
+### Embedding `posts` Collection within `users` Collection
+
+Embedding the `posts` collection within the `users` collection offers several advantages:
+
+- **Simplified Queries:** It simplifies queries when accessing a user's posts since posts are directly nested within the user document. This reduces the number of reads needed and improves query efficiency.
+
+- **Optimized Access:** Users can easily access their posts with a single read operation, which is beneficial for applications where posts are always accessed in the context of a user.
+
+### Keeping `posts` Collection Separate
+
+Alternatively, keeping the `posts` collection separate allows for more flexibility and scalability:
+
+- **Independent Access:** Posts can be accessed independently of users, which is useful if posts need to be queried globally or if they have relationships with entities besides users.
+
+- **Structured Management:** It facilitates managing posts in a more structured manner, especially when posts have complex relationships with other entities.
+
+- **Avoiding Scalability Issues:** Keeping the `posts` collection separate can prevent potential scalability issues, especially if a user has a large number of posts, as Firestore documents have size limits.
+
+### The Second Option Is the Way to Go
+
+Opting for the second option is advantageous due to its scalability. It acknowledges the potential for posts to originate from sources beyond just individual users, such as pages. By accommodating this flexibility, the system becomes more adaptable to future changes and expansions in the platform's functionality. This ensures robustness and effectiveness in managing posts across diverse content sources, enhancing overall reliability.
+
+## Port issues
+
+I encountered an issue where my Flask server was conflicting with the browser port. This conflict prevented the server from starting properly, resulting in connection errors. To resolve this issue, I assigned the Flask application to run on port 5001 instead of the default port. By specifying the port explicitly, I was able to bypass the conflict and ensure that the Flask server started without any issues.
+
+## Code organization
+
+While attempting to improve code organization, I found that due to time constraints, achieving optimal organization was challenging. Despite recognizing the importance of clean and modular code, limited time prevented me from implementing the desired level of organization effectively. As a result, the code structure may not be as well-organized as I had envisioned. However, I aim to revisit the code in the future to enhance its organization and maintainability once time allows.
+
