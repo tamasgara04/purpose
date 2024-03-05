@@ -163,3 +163,55 @@ Alternatively, keeping the `posts` collection separate allows for more flexibili
 ### The Second Option Is the Way to Go
 
 Opting for the second option is advantageous due to its scalability. It acknowledges the potential for posts to originate from sources beyond just individual users, such as pages. By accommodating this flexibility, the system becomes more adaptable to future changes and expansions in the platform's functionality. This ensures robustness and effectiveness in managing posts across diverse content sources, enhancing overall reliability.
+
+## Port issues
+
+I encountered an issue where my Flask server was conflicting with the browser port. This conflict prevented the server from starting properly, resulting in connection errors. To resolve this issue, I assigned the Flask application to run on port 5001 instead of the default port. By specifying the port explicitly, I was able to bypass the conflict and ensure that the Flask server started without any issues.
+
+## Code organization
+
+While attempting to improve code organization, I found that due to time constraints, achieving optimal organization was challenging. Despite recognizing the importance of clean and modular code, limited time prevented me from implementing the desired level of organization effectively. As a result, the code structure may not be as well-organized as I had envisioned. However, I aim to revisit the code in the future to enhance its organization and maintainability once time allows.
+
+# Documentation
+
+Once the Docker container is up and running, navigate to http://localhost:5001 in your web browser. From there, you can log in using the Google Sign-In button. Upon successful authentication, you'll be directed to the landing page. 
+
+## You'll notice three distinct sections:
+
+- The initial box displays details about the Google user.
+- The second box serves as a chat interface, enabling interaction with the ML Bot. (Currently only a little bit of knowledge of germany and all the users in the database.)
+- The third section showcases posts retrieved from a specific user via the API. 
+
+### Obtaining API Token:
+To authenticate as an API user, send a POST request to http://127.0.0.1:5001/loginjwt with the following JSON payload:
+```json
+{
+    "username": "user1",
+    "password": "password1"
+}
+```
+
+Upon successful authentication, you'll receive a response containing an access token:
+
+```json
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwOTYwNDI2MiwianRpIjoiY2JiZTkyM2QtNDkzMi00NjJlLWE4MWItZDUxZWQyMzE3ZGExIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InVzZXIxIiwibmJmIjoxNzA5NjA0MjYyLCJjc3JmIjoiYjBiOGZkOGUtZDBjOS00MWVhLWEyMTctZWE4MTg0OWZjMzU4IiwiZXhwIjoxNzA5NjA1MTYyfQ.IkLEwCw8FdY8ATogoF5j5o-vG8lne_wqtBnQdtGanI0"
+}
+```
+### Testing the Token:
+You can test the token's validity by making a GET request to http://127.0.0.1:5001/get_all_users with the Authorization header set to "Bearer <access_token>". This will return a list of users:
+```json
+[
+    {
+        "email": "alice@example.com",
+        "name": "Alice"
+    },
+    {
+        "email": "test@example.com",
+        "name": "Test"
+    }
+]
+```
+
+### Rate Limiting:
+Be mindful of rate limits. Exceeding 10 requests per minute to /get_alice or /get_all_users will result in a limit error.
